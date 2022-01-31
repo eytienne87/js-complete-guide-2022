@@ -4,18 +4,22 @@ const removeAddMenuBtn = addModal.querySelector('.btn--passive');
 const backdrop = document.getElementById('backdrop');
 
 const inputs = document.querySelectorAll('input');
-const addMovieButton = removeAddMenuBtn.nextElementSibling
+const addMovieButton = removeAddMenuBtn.nextElementSibling;
 const ul = document.querySelector('#movie-list');
 const defaultMessage = document.getElementById('entry-text');
 
-const movieElements = document.querySelectorAll('.movie-element')
-const movieElement = document.querySelector('.movie-element')
+const movieElements = document.querySelectorAll('.movie-element');
+const movieElement = document.querySelector('.movie-element');
 const deleteModal = document.getElementById('delete-modal');
 const errorMessage = addModal.lastElementChild.firstElementChild;
 
 const movies = [];
 
-// Movie Card
+const clearMovieInputs = () => {
+  for (const input of inputs) {
+    input.value = '';
+  }
+}
 
 const addMovieHandler = () => {
   const titleValue = inputs[0].value.trim();
@@ -45,8 +49,8 @@ const addMovieHandler = () => {
   }
 
   movies.push(newMovie);
-  console.log(movies);
   toggleAddingModal();
+  clearMovieInputs()
 };
 
 const displayMovieCard = () => {
