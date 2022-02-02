@@ -15,6 +15,14 @@ const errorMessage = addModal.lastElementChild.firstElementChild;
 
 const movies = [];
 
+const updateUI = () => {
+  if (movies.length === 0) {
+    defaultMessage.style.display = 'block';
+  } else {
+    defaultMessage.style.display = 'none';
+  }
+}
+
 const clearMovieInputs = () => {
   for (const input of inputs) {
     input.value = '';
@@ -50,26 +58,25 @@ const addMovieHandler = () => {
 
   movies.push(newMovie);
   toggleAddingModal();
-  clearMovieInputs()
+  clearMovieInputs();
+  updateUI();
+  renderNewMovieElement(newMovie.title, newMovie.imageUrl, newMovie.rating);
+  console.log(movies);
 };
 
-const displayMovieCard = () => {
-  defaultMessage.style.display = 'none';
-  ul.insertAdjacentHTML('beforeend',
-    `<li class="movie-element">
+const renderNewMovieElement = (title, imageUrl, rating) => {
+  const newMovieElement = document.createElement('li');
+  newMovieElement.className = 'movie-element';
+  newMovieElement.innerHTML = `
     <div class="movie-element__image">
-    <img src="${inputs[1].value}" alt="movie picture">
+      <img src="${imageUrl}" alt="movie picture">
     </div>
     <div class="movie-element__info">
-    <h2>${inputs[0].value}</h2>
-    <p>${inputs[2].value}/5 stars</p>
+      <h2>${title}</h2>
+      <p>${rating}/5 stars</p>
     </div>
-    </li>`
-  )
-  toggleAddingModal();
-  inputs[1].value = '';
-  inputs[2].value = '';
-  inputs[0].value = '';
+  `
+  ul.append(newMovieElement);
 }
 
 const toggleBackdrop = () => {
@@ -85,6 +92,7 @@ const toggleAddingModal = () => {
 
 const cancelAddMovieHandler = () => {
   toggleAddingModal();
+  clearMovieInputs();
 }
 
 const backdropClickHandler = () => {
